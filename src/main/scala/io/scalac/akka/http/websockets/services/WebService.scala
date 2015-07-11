@@ -6,5 +6,4 @@ trait WebService {
 
   def route: Route
 
-  def apply(): Route = route
 }
