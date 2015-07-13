@@ -4,11 +4,10 @@ import akka.http.scaladsl.model.ws.{Message, TextMessage}
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import akka.stream.scaladsl.Flow
-import io.scalac.akka.http.websockets.services.WebService
 
-object EchoService extends WebService {
+object EchoService {
 
-  override def route: Route = path("ws-echo") {
+  def route: Route = path("ws-echo") {
     get {
       handleWebsocketMessages(echoService)
     }
