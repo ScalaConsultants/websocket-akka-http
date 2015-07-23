@@ -8,11 +8,9 @@ import akka.stream.scaladsl._
 
 class ChatRoom(roomId: Int, actorSystem: ActorSystem) {
 
-  val chatRoomActor = actorSystem.actorOf(Props(classOf[ChatRoomActor], roomId))
+  private[this] val chatRoomActor = actorSystem.actorOf(Props(classOf[ChatRoomActor], roomId))
 
-  def websocketFlow(user: String): Flow[Message, Message, _] = {
-
-    //Factory method allows for materialization this Source
+  def websocketFlow(user: String): Flow[Message, Message, _] =
     Flow(Source.actorRef[ChatMessage](5, OverflowStrategy.fail)) {
       implicit builder =>
         chatSource => //source provideed as argument
@@ -54,8 +52,6 @@ class ChatRoom(roomId: Int, actorSystem: ActorSystem) {
           // expose ports
           (fromWebsocket.inlet, backToWebsocket.outlet)
     }
-
-  }
 
   def sendMessage(message: ChatMessage): Unit = chatRoomActor ! message
 
