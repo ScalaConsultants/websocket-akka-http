@@ -26,11 +26,28 @@ object Server extends App {
 
   val binding = Http().bindAndHandle(route, interface, port)
   println(s"Server is now online at http://$interface:$port\nPress RETURN to stop...")
+
+  /**
+   * Run WSClient when `with-client` argument is provided
+   */
+  alternativelyRunTheClient()
+
   StdIn.readLine()
 
   import actorSystem.dispatcher
 
   binding.flatMap(_.unbind()).onComplete(_ => actorSystem.shutdown())
   println("Server is down...")
+
+  private def alternativelyRunTheClient(): Unit = {
+
+    if (args.head.equalsIgnoreCase("with-client")) {
+      val c: WSClient = WSClient("http://localhost:8080/ws-chat/123?name=HAL1000", "HAL1000")
+
+      if (c.connectBlocking())
+        c.spam("hello message")
+    }
+
+  }
 
 }
