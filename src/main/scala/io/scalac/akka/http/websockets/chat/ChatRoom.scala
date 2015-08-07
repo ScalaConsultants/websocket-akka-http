@@ -11,7 +11,7 @@ class ChatRoom(roomId: Int, actorSystem: ActorSystem) {
   private[this] val chatRoomActor = actorSystem.actorOf(Props(classOf[ChatRoomActor], roomId))
 
   def websocketFlow(user: String): Flow[Message, Message, _] =
-    Flow(Source.actorRef[ChatMessage](5, OverflowStrategy.fail)) {
+    Flow(Source.actorRef[ChatMessage](bufferSize = 5, OverflowStrategy.fail)) {
       implicit builder =>
         chatSource => //source provideed as argument
 
