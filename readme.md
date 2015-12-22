@@ -2,7 +2,7 @@
 
 It's sample code that shows how to use `akka-http` and `akka-streams` to build custom websocket server.
 
-You can read more about the code [here](http://blog.scalac.io/2015/07/30/websocket-server-with-akka-http.html)
+You can read more about the code [here](http://blog.scalac.io/2015/07/30/websockets-server-with-akka-http.html)
 
 to run server:
 
