@@ -41,7 +41,7 @@ object Server extends App {
 
   private def alternativelyRunTheClient(): Unit = {
 
-    if (args.head.equalsIgnoreCase("with-client")) {
+    if (args.headOption.map(_.equalsIgnoreCase("with-client")).getOrElse(false)) {
       val c: WSClient = WSClient("http://localhost:8080/ws-chat/123?name=HAL1000", "HAL1000")
 
       if (c.connectBlocking())
